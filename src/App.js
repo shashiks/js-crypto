@@ -53,12 +53,6 @@ const divider = ":::";
 
 const ipfs = ipfsAPI('localhost', '5001', { protocol: 'http' })
 var me = null;
-var keySize = 256;
-var ivSize = 128;
-var iterations = 100;
-var pass = 'welcome123';
-var phrase = null;
-
 
 //random chars for AES key
 var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz*&-%/!?*+=()";
@@ -101,7 +95,9 @@ class App extends Component {
     }
 
 
-
+    /**
+    The function performs the encryption first AES and then RSA
+    */
     encrypt = (publicKey) => {
       
       //read the data to encrypt
@@ -129,6 +125,12 @@ class App extends Component {
 
     }
 
+
+    /**
+      The function that is called when a user clicks on 'decrypt' button.
+      Decrypts the content from the cypher field populated by the 'encrypt' method above.
+      Uses the private key provided in the textarea on UI to initially RSA decrypt
+    */
     decrypt = () => {
       
       //read the encrypted data from somewhere
@@ -162,7 +164,10 @@ class App extends Component {
 
     }
 
-
+    /**
+    Sample code just to perform AES symmetric encryption.
+    Not used in normal flow currently.
+    */
     encryptAES = () => {
 
       let data = this.refs.mydata.value;
@@ -176,6 +181,9 @@ class App extends Component {
 
     }
 
+    /**
+    Sample AES decryption code
+    */
     decryptAES = () => {
 
       var cypher = this.refs.cyphertext.value;
@@ -186,9 +194,10 @@ class App extends Component {
     }
 
 
-
-    // encrypt a javascript object into a payload to be sent
-    // to a server or stored on the client
+    /**
+      Just performs RSA encryption using public key
+      passed as param. Not used in E2E flow for now.
+    */
     encryptRSA = (publicKey) => {
      
 
@@ -205,6 +214,9 @@ class App extends Component {
     }
 
 
+    /**
+    Performs RSA decryption. Not used in E2E flow for now.
+    */
     decryptRSA = () => {
 
       var cypher = this.refs.cyphertext.value;
@@ -220,7 +232,11 @@ class App extends Component {
     }
    
 
-
+    /**
+    The function called when user clicks on 'ecnrypt' button on UI.
+    This is done for now to ensure that encryt method is passed the
+    public key from IPFS. The path is hard coded above as clientPubKeyHash.
+    */
     encryptE2E = () => {
 
         var keyHash = clientPubKeyHash;
